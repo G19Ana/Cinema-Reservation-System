@@ -1,0 +1,46 @@
+<a routerLink="/" class="muted">&larr; All movies</a>
+
+@if (screening) {
+  <h1>{{ screening.movieTitle }}</h1>
+  <p class="muted">{{ screening.startTime | date: 'EEE d MMM, HH:mm' }} - {{ screening.hallName }} - {{ screening.price }} per seat</p>
+}
+
+<div class="card map-wrap">
+  <!-- viewBox makes the SVG scale to the screen width -->
+  <svg [attr.viewBox]="'0 0 ' + width + ' ' + height" role="group" aria-label="Seat map">
+
+    <!-- The screen -->
+    <rect [attr.x]="LEFT" y="8" [attr.width]="width - LEFT" height="8" rx="4" class="screen"/>
+    <text [attr.x]="(width + LEFT) / 2" y="30" class="screen-label">SCREEN</text>
+
+    <!-- Row letters on the left -->
+    @for (r of rowLetters(); track r) {
+      <text x="8" [attr.y]="rowY(r) + SEAT / 2 + 5" class="row-label">{{ r }}</text>
+    }
+
+    <!-- One group per seat: a rounded square + its number. Clicking toggles selection. -->
+    @for (seat of seats; track seat.id) {
+      <g [class]="'seat ' + seatClass(seat)" tabindex="0"
+         role="button" [attr.aria-label]="'Seat ' + seat.row + seat.number + ', ' + seatClass(seat)"
+         (click)="toggle(seat)" (keydown.enter)="toggle(seat)">
+        <rect [attr.x]="x(seat)" [attr.y]="y(seat)" [attr.width]="SEAT" [attr.height]="SEAT" rx="7"/>
+        <text [attr.x]="x(seat) + SEAT / 2" [attr.y]="y(seat) + SEAT / 2 + 4">{{ seat.number }}</text>
+      </g>
+    }
+  </svg>
+
+  <!-- Legend: colour alone is not enough, so each swatch is labelled -->
+  <div class="legend">
+    <span><i class="free"></i>Available</span>
+    <span><i class="selected"></i>Your pick</span>
+    <span><i class="held"></i>Held by someone</span>
+    <span><i class="booked"></i>Booked</span>
+  </div>
+</div>
+
+@if (error) { <p class="error" role="alert">{{ error }}</p> }
+
+<div class="summary">
+  <span>{{ selected.size }} seat(s) selected - <strong>{{ total }}</strong></span>
+  <button (click)="continueToCheckout()" [disabled]="selected.size === 0 || busy">Hold seats and checkout</button>
+</div>

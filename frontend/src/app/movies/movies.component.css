@@ -1,0 +1,4 @@
+.times { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.time { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; text-decoration: none; color: var(--text); display: flex; flex-direction: column; }
+.time span { font-size: 13px; color: var(--muted); }
+.time:hover { border-color: var(--accent); }

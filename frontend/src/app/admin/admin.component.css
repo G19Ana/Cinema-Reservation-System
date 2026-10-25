@@ -1,0 +1,4 @@
+ul { list-style: none; padding: 0; margin: 16px 0 0; }
+li { padding: 8px 0; border-top: 1px solid var(--line); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+li button { margin-left: auto; }
+button.small { padding: 4px 10px; font-size: 13px; }

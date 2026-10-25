@@ -1,0 +1,49 @@
+<h1>Admin</h1>
+@if (error) { <p class="error" role="alert">{{ error }}</p> }
+
+<!-- ===== Movies ===== -->
+<section class="card">
+  <h2>Movies</h2>
+  <div class="row">
+    <label>Title <input [(ngModel)]="newMovie.title" name="title"></label>
+    <label>Genre <input [(ngModel)]="newMovie.genre" name="genre"></label>
+    <label>Minutes <input type="number" [(ngModel)]="newMovie.durationMinutes" name="dur" min="1"></label>
+  </div>
+  <label>Description <input [(ngModel)]="newMovie.description" name="desc"></label>
+  <button (click)="addMovie()" [disabled]="!newMovie.title">Add movie</button>
+
+  <ul>
+    @for (m of movies; track m.id) {
+      <li>{{ m.title }} <span class="muted">({{ m.durationMinutes }} min)</span>
+        <button class="secondary small" (click)="removeMovie(m)">Delete</button></li>
+    }
+  </ul>
+</section>
+
+<!-- ===== Screenings / theatre layout ===== -->
+<section class="card">
+  <h2>Screenings and seat layout</h2>
+  <div class="row">
+    <label>Movie
+      <select [(ngModel)]="newScreening.movieId" name="movie">
+        @for (m of movies; track m.id) { <option [ngValue]="m.id">{{ m.title }}</option> }
+      </select>
+    </label>
+    <label>Hall <input [(ngModel)]="newScreening.hallName" name="hall"></label>
+    <label>Start <input type="datetime-local" [(ngModel)]="newScreening.startTime" name="start"></label>
+  </div>
+  <div class="row">
+    <label>Price <input type="number" [(ngModel)]="newScreening.price" name="price" min="0"></label>
+    <label>Rows (max 26) <input type="number" [(ngModel)]="newScreening.rows" name="rows" min="1" max="26"></label>
+    <label>Seats per row <input type="number" [(ngModel)]="newScreening.seatsPerRow" name="cols" min="1" max="40"></label>
+  </div>
+  <button (click)="addScreening()" [disabled]="!newScreening.startTime || !newScreening.movieId">Add screening</button>
+
+  <ul>
+    @for (s of screenings; track s.id) {
+      <li>{{ s.movieTitle }} - {{ s.startTime | date: 'd MMM, HH:mm' }} - {{ s.hallName }}
+        <span class="muted">({{ s.rows }} x {{ s.seatsPerRow }} seats)</span>
+        <button class="secondary small" (click)="removeScreening(s)">Delete</button></li>
+    }
+  </ul>
+</section>

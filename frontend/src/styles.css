@@ -1,0 +1,32 @@
+/* Global styles shared by all pages. Component-specific styles live next to each component. */
+:root {
+  --bg: #121014;
+  --card: #1c181f;
+  --line: #342d38;
+  --text: #ece6ef;
+  --muted: #9a90a0;
+  --accent: #f0689e;      /* pink, same as the project card */
+  --free: #3a3340;
+  --taken: #5b2a3c;
+  --held: #8a6a1f;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; line-height: 1.5; }
+main { max-width: 900px; margin: 0 auto; padding: 24px 16px 64px; }
+h1, h2, h3 { margin: 0 0 12px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.muted { color: var(--muted); }
+.error { color: #ff8a8a; margin: 8px 0; }
+.ok { color: #7fe3a0; }
+button, .btn {
+  background: var(--accent); color: #1a0f15; border: 0; border-radius: 8px; padding: 8px 16px;
+  font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block;
+}
+button.secondary, .btn.secondary { background: transparent; color: var(--text); border: 1px solid var(--line); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input, select { background: #0e0c10; color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; width: 100%; }
+label { display: block; margin-bottom: 10px; font-size: 14px; color: var(--muted); }
+.row { display: flex; gap: 12px; flex-wrap: wrap; }
+.row > * { flex: 1 1 140px; }
+a { color: var(--accent); }

@@ -1,0 +1,44 @@
+@if (booking) {
+  <!-- ===== Step 2: confirmation ===== -->
+  <section class="card">
+    <h1 class="ok">Booking confirmed</h1>
+    <p><strong>{{ booking.movieTitle }}</strong> - {{ booking.startTime | date: 'EEE d MMM, HH:mm' }} - {{ booking.hallName }}</p>
+    <p>Seats: {{ booking.seats.join(', ') }}</p>
+    <p>Booking code: <strong>{{ booking.code }}</strong></p>
+    <a class="btn" [href]="ticketUrl()">Download e-ticket (PDF)</a>
+  </section>
+
+} @else if (expired) {
+  <section class="card">
+    <h1>Your hold ran out</h1>
+    <p>Seats are held for 10 minutes. Pick your seats again to continue.</p>
+    <a class="btn" [routerLink]="['/screening', screening?.id ?? 0]">Back to seat map</a>
+  </section>
+
+} @else {
+  <!-- ===== Step 1: payment ===== -->
+  <h1>Checkout</h1>
+
+  <section class="card">
+    @if (screening) { <h2>{{ screening.movieTitle }}</h2> }
+    <p>Seats:
+      @for (s of mySeats; track s.id) { <span class="chip">{{ s.row }}{{ s.number }}</span> }
+    </p>
+    <p>Total: <strong>{{ total }}</strong></p>
+    <p class="timer" role="timer">Seats held for {{ minutes }}:{{ seconds }}</p>
+  </section>
+
+  <section class="card">
+    <h2>Your details</h2>
+    <label>Name <input [(ngModel)]="name" name="name" autocomplete="name"></label>
+    <label>Email <input [(ngModel)]="email" name="email" type="email" autocomplete="email"></label>
+    <label>Card number (demo only - nothing is charged or stored; start with 0000 to test a decline)
+      <input [(ngModel)]="cardNumber" name="card" inputmode="numeric" placeholder="4242 4242 4242 4242">
+    </label>
+    @if (error) { <p class="error" role="alert">{{ error }}</p> }
+    <div class="row">
+      <button (click)="pay()" [disabled]="busy || !name || !email || cardNumber.length < 12">Pay {{ total }}</button>
+      <a class="btn secondary" [routerLink]="['/screening', screening?.id ?? 0]">Change seats</a>
+    </div>
+  </section>
+}

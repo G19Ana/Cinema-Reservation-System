@@ -1,0 +1,24 @@
+<h1>Now showing</h1>
+
+@if (movies.length === 0) {
+  <p class="muted">No movies yet. Add some in the Admin panel.</p>
+}
+
+@for (movie of movies; track movie.id) {
+  <section class="card">
+    <h2>{{ movie.title }}</h2>
+    <p class="muted">{{ movie.genre }} - {{ movie.durationMinutes }} min</p>
+    <p>{{ movie.description }}</p>
+
+    <div class="times">
+      @for (s of screeningsOf(movie); track s.id) {
+        <a class="time" [routerLink]="['/screening', s.id]">
+          <strong>{{ s.startTime | date: 'EEE d MMM, HH:mm' }}</strong>
+          <span>{{ s.hallName }} - {{ s.price }}</span>
+        </a>
+      } @empty {
+        <span class="muted">No screenings scheduled.</span>
+      }
+    </div>
+  </section>
+}

@@ -1,0 +1,20 @@
+.map-wrap { overflow-x: auto; }
+svg { width: 100%; max-width: 560px; display: block; margin: 0 auto; }
+.screen { fill: var(--accent); opacity: .7; }
+.screen-label, .row-label { fill: var(--muted); font-size: 11px; text-anchor: middle; }
+.seat { cursor: pointer; outline: none; }
+.seat text { fill: var(--text); font-size: 11px; text-anchor: middle; pointer-events: none; }
+.seat.free rect { fill: var(--free); }
+.seat.free:hover rect, .seat:focus-visible rect { stroke: var(--accent); stroke-width: 2; }
+.seat.selected rect { fill: var(--accent); }
+.seat.selected text { fill: #1a0f15; font-weight: 700; }
+.seat.held rect { fill: var(--held); }
+.seat.booked rect { fill: var(--taken); }
+.seat.held, .seat.booked { cursor: not-allowed; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 12px; font-size: 13px; color: var(--muted); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.legend .free { background: var(--free); } .legend .selected { background: var(--accent); }
+.legend .held { background: var(--held); } .legend .booked { background: var(--taken); }
+
+.summary { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
